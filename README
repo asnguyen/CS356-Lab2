@@ -52,3 +52,60 @@ PO Box Result: 4321
 [8-11] 3A DE 68 B1
 [12-15] EA 99 10 E1
 ---------------------------------------------------------------------
+Results of Exercise 1:
+CS Server:
+Client IP address/Port number: 128.83.120.77-51128
+----------------------------------------
+[Client -> CS356 Server] Request
+[0-3] 81 64 01 07
+[4-7] 00 00 10 8D
+[8-11] 80 53 78 4D
+[12-15] A0 2E D4 37
+
+Received: Type 1 Request
+
+Server Under Test (SUT) IP-Port: 128.83.120.77-54327
+----------------------------------------
+[CS356 Server -> SUT] Type 0 Request
+[0-3] 01 64 01 07
+[4-7] 6B 7B 45 67
+[8-11] 3A 33 65 63
+[12-15] AD 1B 00 00
+----------------------------------------
+[SUT -> CS356 Server] Type 0 Response
+[0-3] 41 64 01 07
+[4-7] 6B 7B 45 67
+[8-11] 3A 33 65 63
+[12-15] 5D 2F 0F EC
+----------------------------------------
+[CS356 Server -> Client] Type 1 Response
+[0-3] C1 64 01 07
+[4-7] 00 00 10 8D
+[8-11] 80 53 78 4D
+[12-15] 34 66 00 00
+Type 0 transaction SUCCESS.  P.O. Box number is:  4076
+
+SUT:
+Client IP address/Port number: 128.83.144.56-39173
+-----------------------------------------------------------------------
+[CLient -> MyServer] Request
+[0-3]   0x164 0x107
+[4-7]   0x6b7b 0x4567
+[8-11]  0x3a33 0x6563
+[12-15] 0xad1b 0x0
+
+PO number is 4076
+-----------------------------------------------------------------------
+[MyServer -> Client] Type 0 Response
+[0-3]   0x4164 0x107
+[0-7]   0x6b7b 0x4567
+[8-11]  0x3a33 0x6563
+[12-15] 0x5d2f 0xfec
+
+Client:
+Start
+
+Success
+
+End
+
