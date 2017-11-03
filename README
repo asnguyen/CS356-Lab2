@@ -1,18 +1,54 @@
 Results of Exercise 0 part 1:
-Client IP address/Port number: 128.83.120.77-57380
+###################CLIENT####################
+
+Start
+Exercise 0 using port 35604
+
+Enter Social Security Number: 987654321
+P.O Box number is 4321
+
+End
+
+###################SERVER####################
+Client IP address/Port number: 128.83.120.77-34919
 ----------------------------------------
 [Client -> CS356 Server] Request
 [0-3] 01 64 01 07
-[4-7] 00 00 1B CD
-[8-11] 06 9F 6B C7
-[12-15] 6F 61 00 00
+[4-7] 00 00 17 06
+[8-11] 3A DE 68 B1
+[12-15] 42 FF 00 00
 
-PO Box Result: 1234
+PO Box Result: 4321
 ----------------------------------------
 [CS356 Server -> Client] Type 0 Response
 [0-3] 41 64 01 07
-[4-7] 00 00 1B CD
-[8-11] 06 9F 6B C7
-[12-15] 2A 8F 04 D2
+[4-7] 00 00 17 06
+[8-11] 3A DE 68 B1
+[12-15] F2 1D 10 E1
+---------------------------------------------------------------------
+Results of Exercise 0 part 2:
+###################CLIENT####################
+Start
+Exercise 0 using port 35607
 
+Enter Social Security Number: 987654321
+Error: Incorrect Checksum
 
+End
+###################SERVER####################
+Client IP address/Port number: 128.83.120.77-37191
+----------------------------------------
+[Client -> CS356 Server] Request
+[0-3] 01 64 01 07
+[4-7] 00 00 1A 8A
+[8-11] 3A DE 68 B1
+[12-15] 3F 7B 00 00
+
+PO Box Result: 4321
+----------------------------------------
+[CS356 Server -> Client] Type 0 Response
+[0-3] 41 64 01 07
+[4-7] 00 00 1A 8A
+[8-11] 3A DE 68 B1
+[12-15] EA 99 10 E1
+---------------------------------------------------------------------

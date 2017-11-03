@@ -9,10 +9,10 @@ from sys    import *
 
 def main():
  print "Start"
-
+ print "Exercise 0 using port 35607\n"
  serverName = "128.83.144.56"
- serverPort = 35604
- print "Exercise 0 using port "+str(serverPort)+"\n"
+ serverPort = 35607
+
  clientSocket = socket(AF_INET,SOCK_DGRAM)
  
  #PACKET CREATION STEP
@@ -43,20 +43,30 @@ def main():
 
  #PACKET SENDING STEP
  clientSocket.settimeout(5)
+ count=0
  clientSocket.sendto(mypkt,(serverName, serverPort))
  
  #PACKET RECIEVING STEP
- retpkt = clientSocket.recvfrom(65565)  
- retarray =  unpack('!HHHHHHHH', retpkt[0])
- retChecksum = create_checksum(retarray)
- if int(retChecksum) == 65535:
-  print "P.O Box number is " + str(retarray[7])+'\n'
+ retpkt = ''
+ while count < 5 and retpkt == '':
+  try:
+   retpkt = clientSocket.recvfrom(65565)
+  except OSError as msg:
+   count = count + 1
+   
+ if retpkt != '':  
+  retarray =  unpack('!HHHHHHHH', retpkt[0])
+  retChecksum = create_checksum(retarray)
+  if int(retChecksum) == 65535:
+   print "P.O Box number is " + str(retarray[7])+'\n'
+  else:
+   print "Error: Incorrect Checksum\n"
  else:
-  print "Error Occured\n"
- 
+  print "Unexpected Error Occured" 
  clientSocket.close()
  print "End"
 
+#HELPER FUNCTIONS
 def split_num(num):
  higherB = num >> 16
  lowerB = num - (higherB << 16)
