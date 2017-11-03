@@ -10,49 +10,47 @@ from sys    import *
 def main():
  print "Start"
 
- #serverName = "128.83.144.56"
- #serverPort = 35604
- serverName = "128.83.120.77"
- serverPort = 48098
- #print "Exercise 0 using port "+str(serverPort)+"\n"
- clientSocket = socket(AF_INET,SOCK_DGRAM)
+ serverName = "128.83.144.56"                                 #The IP address of the CS server
+ serverPort = 35604                                           #Using port 35604
+ clientSocket = socket(AF_INET,SOCK_DGRAM)                    #create the UDP socket
  
  #PACKET CREATION STEP
- myarray = array('l')
- #myarray.append(0x071F)
- myarray.append(0x0164)
+ myarray = array('l')                                         #defines the type of array and addes the first two
+ myarray.append(0x0164)                                       #entries that represent the desire format we want
  myarray.append(0x0107)
  
- cookie = create_cookie()
+ cookie = create_cookie()                                     #gets the cookie that we will use
  myarray.append(int(cookie[0],16))
- myarray.append(int(cookie[1],16))
+ myarray.append(int(cookie[1],16))                           
 
- myinput = input("Enter Social Security Number: ")
- mytuple = split_num(myinput)
- #mytuple = split_num(111111111)
- myarray.append(int(mytuple[0],16))
+ myinput = input("Enter Social Security Number: ")            #prompts use for input
+ mytuple = split_num(myinput)                                 #splits the integer into its higher order bits
+ myarray.append(int(mytuple[0],16))                           #and lower order bits
  myarray.append(int(mytuple[1],16))
 
- #creating checksum
- mask = 0xFFFF
- checksum = create_checksum(myarray)
- checksum = checksum ^ mask
+ #creating checksum                                           #creates the checksum by adding all of the elements
+ mask = 0xFFFF                                                #in the array together using one's complement
+ checksum = create_checksum(myarray)                          #addition and then taking the one's complement of 
+ checksum = checksum ^ mask                                   #That number.
  myarray.append(checksum)
- myarray.append(0x0000)
+ myarray.append(0x0000)                                       #adds the empty result
  
  #creating the packet#
- mypkt = pack_packet(myarray)
+ mypkt = pack_packet(myarray)                                 #creates the packet
 
- #PACKET SENDING STEP
- clientSocket.settimeout(5)
- clientSocket.sendto(mypkt,(serverName, serverPort))
+ #PACKET SENDING STEP            
+ clientSocket.settimeout(5)                                   #sets the timeout to be 5 seconds
+ clientSocket.sendto(mypkt,(serverName, serverPort))          #sends the packet
  
  #PACKET RECIEVING STEP
- retpkt = clientSocket.recvfrom(65565)  
- retarray =  unpack('!HHHHHHHH', retpkt[0])
- retChecksum = create_checksum(retarray)
- if int(retChecksum) == 65535:
-  print "P.O Box number is " + str(retarray[7])+'\n'
+ retpkt = clientSocket.recvfrom(65565)                        #recieves the packet
+ retarray =  unpack('!HHHHHHHH', retpkt[0])                   #unpacks the format into an array of 16 bit integers
+ retChecksum = create_checksum(retarray)                      #calculates the checksum
+ if int(retChecksum) == 65535:                                #checks the checksum to see if it is correct
+  if (retarray[7] & 0x8000) == 0x8000:                        #checks to see if it was successful
+   print "ERROR: "+ hex(retarray[7])+'\n'
+  else:
+   print "P.O Box number is " + str(retarray[7])+'\n'
  else:
   print "Error Occured\n"
  
