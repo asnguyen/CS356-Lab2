@@ -22,7 +22,8 @@ def main():
  clientname = tempSocket.getsockname()
 
  mySocket = socket(AF_INET,SOCK_DGRAM)
- mySocket.bind((clientname[0],clientname[1]+1))
+ #mySocket.bind((clientname[0],clientname[1]+1))
+ mySocket.bind((clientname[0],54327))
  socketName = mySocket.getsockname()
  print socketName
  
