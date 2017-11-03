@@ -1,0 +1,18 @@
+Results of Exercise 0 part 1:
+Client IP address/Port number: 128.83.120.77-57380
+----------------------------------------
+[Client -> CS356 Server] Request
+[0-3] 01 64 01 07
+[4-7] 00 00 1B CD
+[8-11] 06 9F 6B C7
+[12-15] 6F 61 00 00
+
+PO Box Result: 1234
+----------------------------------------
+[CS356 Server -> Client] Type 0 Response
+[0-3] 41 64 01 07
+[4-7] 00 00 1B CD
+[8-11] 06 9F 6B C7
+[12-15] 2A 8F 04 D2
+
+
